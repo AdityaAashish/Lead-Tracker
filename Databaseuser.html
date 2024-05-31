@@ -1,0 +1,4 @@
+CREATE DATABASE lead_tracker;
+CREATE USER 'lead_user'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON lead_tracker.* TO 'lead_user'@'localhost';
+FLUSH PRIVILEGES;

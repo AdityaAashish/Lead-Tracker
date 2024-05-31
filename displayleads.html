@@ -1,0 +1,60 @@
+<?php
+session_start();
+if (!isset($_SESSION['client_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
+require 'db.php';
+
+$stmt = $pdo->query('SELECT name, mobile_number, age, city, created_at FROM leads ORDER BY created_at DESC');
+$leads = $stmt->fetchAll();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leads Tracker</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Leads Tracker</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Mobile Number</th>
+                <th>Age</th>
+                <th>City</th>
+                <th>Submitted At</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($leads as $lead) : ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($lead['name']); ?></td>
+                    <td><?php echo htmlspecialchars($lead['mobile_number']); ?></td>
+                    <td><?php echo htmlspecialchars($lead['age']); ?></td>
+                    <td><?php echo htmlspecialchars($lead['city']); ?></td>
+                    <td><?php echo htmlspecialchars($lead['created_at']); ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</body>
+</html>
